@@ -1,4 +1,4 @@
-from check_table import check_table
+from check_table import is_label, label_from_line, is_symbol
 from symboltable import SymbolTable
 
 class Parser:
@@ -25,7 +25,10 @@ class Parser:
                 # length and will be ignored
                 if len(line) > 0:
                     # Check for and store user-defined symbols
-                    check_table(self.symbol_table, line, addr)
+                    if is_label(line):
+                        label = label_from_line(line)
+                        if is_symbol(label):
+                            self.symbol_table.add_entry(label, addr)
 
                     code.append(line)
 

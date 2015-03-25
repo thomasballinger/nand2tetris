@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import parser as par
+from check_table import is_symbol
 from codes import Codes
 import argparse
 
@@ -51,7 +52,7 @@ for i, line in enumerate(p.code):
         # Convert symbols to addresses
         if symbol in p.symbol_table:
             symbol = symbol_table.get_address(symbol)
-        elif symbol[0] not in numbers:
+        elif is_symbol(symbol):
             symbol_table.add_entry(symbol, ram_addr)
 
             symbol = ram_addr

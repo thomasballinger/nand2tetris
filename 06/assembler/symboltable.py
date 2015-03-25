@@ -27,6 +27,8 @@ class SymbolTable:
                             }
 
     def add_entry(self, symbol, address):
+        if symbol in self.symbol_table:
+            raise ValueError("Symbol defined twice")
         self.symbol_table[symbol] = address
 
     def __contains__(self, symbol):

@@ -5,10 +5,10 @@ def check_table(table, line, line_number):
     """
 
     if is_label(line):
-        symbol = line.strip('()')
+        label = label_from_line(line)
 
-        if symbol not in table and not symbol.isdigit():
-            table.add_entry(symbol, line_number)
+        if is_symbol(label):
+            table.add_entry(label, line_number)
 
 
 def is_label(line):
@@ -16,3 +16,11 @@ def is_label(line):
 
     line must be already whitespace-stripped"""
     return line.startswith('(')
+
+
+def label_from_line(line):
+    return line.strip('()')
+
+
+def is_symbol(symbol):
+    return not symbol.isdigit()

@@ -29,11 +29,8 @@ class SymbolTable:
     def add_entry(self, symbol, address):
         self.symbol_table[symbol] = address
 
-    def contains(self, symbol):
-        if symbol in self.symbol_table:
-            return True
-        else:
-            return False
+    def __contains__(self, symbol):
+        return symbol in self.symbol_table
 
     def get_address(self, symbol):
         address = self.symbol_table[symbol]

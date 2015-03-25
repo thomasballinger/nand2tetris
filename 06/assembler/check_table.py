@@ -7,7 +7,7 @@ def check_table(table, line, line_number):
     if is_label(line):
         symbol = line.strip('()')
 
-        if not table.contains(symbol) and not symbol.isdigit():
+        if symbol not in table and not symbol.isdigit():
             table.add_entry(symbol, line_number)
 
 

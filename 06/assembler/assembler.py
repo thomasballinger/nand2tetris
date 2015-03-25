@@ -49,7 +49,7 @@ for i, line in enumerate(p.code):
         symbol_table = p.symbol_table
         numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         # Convert symbols to addresses
-        if p.symbol_table.contains(symbol):
+        if symbol in p.symbol_table:
             symbol = symbol_table.get_address(symbol)
         elif symbol[0] not in numbers:
             symbol_table.add_entry(symbol, ram_addr)

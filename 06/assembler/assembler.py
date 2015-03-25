@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import Parser as par
-import Codes as c
+import parser as par
+import codes as c
 import argparse
 from check_table import check_table
 

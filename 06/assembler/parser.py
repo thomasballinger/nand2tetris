@@ -1,5 +1,5 @@
 from check_table import check_table
-from SymbolTable import SymbolTable
+from symboltable import SymbolTable
 
 class Parser:
     """Parse an assembly program"""

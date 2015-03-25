@@ -1,6 +1,19 @@
 from check_table import is_label, label_from_line, is_symbol
 from symboltable import SymbolTable
 
+
+def strip_whitespace(line):
+    line = line.strip('\n\r')
+    line = line.replace(' ', '')
+    line = line.replace('\t', '')
+    return line
+
+
+def stripped(lines):
+    for line in lines:
+        yield strip_whitespace(line)
+
+
 class Parser:
     """Parse an assembly program"""
     def __init__(self, assembly_file):
@@ -11,11 +24,7 @@ class Parser:
             code = []
             addr = 0
 
-            for line in raw_code:
-                # Strip whitespace
-                line = line.strip('\n\r')
-                line = line.replace(' ', '')
-                line = line.replace('\t', '')
+            for line in stripped(raw_code):
 
                 # Remove comments
                 split_comments = line.split('//')

@@ -3,7 +3,6 @@
 import parser as par
 import codes as c
 import argparse
-from check_table import check_table
 
 arg_parser = argparse.ArgumentParser(description="")
 

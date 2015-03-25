@@ -1,5 +1,3 @@
-import parser as par
-
 def check_table(table, symbol, line_number):
     """Preliminary check through assembly to find user-defined symbols.
 

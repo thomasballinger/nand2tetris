@@ -14,39 +14,47 @@ def stripped(lines):
         yield strip_whitespace(line)
 
 
+def comments_stripped(lines):
+    # Remove comments
+    for line in lines:
+        split_comments = line.split('//')
+        yield split_comments[0]
+
+
+def without_blanks(lines):
+    for line in lines:
+        if line:
+            yield line
+
+
 class Parser:
     """Parse an assembly program"""
     def __init__(self, assembly_file):
         """Open filestream for assembly file and prepare to parse it."""
         self.symbol_table = SymbolTable()
+        self.code = self.parse(assembly_file)
 
+    def parse(self, assembly_file):
         with open(assembly_file, 'r') as raw_code:
             code = []
             addr = 0
 
-            for line in stripped(raw_code):
+            for line in without_blanks(comments_stripped(stripped(raw_code))):
 
-                # Remove comments
-                split_comments = line.split('//')
-                line = split_comments[0]
+                # Check for and store user-defined symbols
+                if is_label(line):
+                    label = label_from_line(line)
+                    if is_symbol(label):
+                        self.symbol_table.add_entry(label, addr)
 
-                # Empty lines or lines with just comments will now be of zero
-                # length and will be ignored
-                if len(line) > 0:
-                    # Check for and store user-defined symbols
-                    if is_label(line):
-                        label = label_from_line(line)
-                        if is_symbol(label):
-                            self.symbol_table.add_entry(label, addr)
+                code.append(line)
 
-                    code.append(line)
+                # Only increment address if line is not a label; labels
+                # don't produce instructions
+                if line[0] != '(':
+                    addr += 1
 
-                    # Only increment address if line is not a label; labels
-                    # don't produce instructions
-                    if line[0] != '(':
-                        addr += 1
-
-            self.code = code
+        return code
 
     def set_current_command(self, command_index):
         """Set which command is being analysed currently."""

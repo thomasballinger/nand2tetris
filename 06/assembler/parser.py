@@ -10,7 +10,7 @@ class Parser:
         with open(assembly_file, 'r') as raw_code:
             code = []
             addr = 0
-            
+
             for line in raw_code:
                 # Strip whitespace
                 line = line.strip('\n\r')
@@ -26,10 +26,10 @@ class Parser:
                 if len(line) > 0:
                     # Check for and store user-defined symbols
                     check_table(self.symbol_table, line, addr)
-                    
+
                     code.append(line)
 
-                    # Only increment address if line is not a label; labels 
+                    # Only increment address if line is not a label; labels
                     # don't produce instructions
                     if line[0] != '(':
                         addr += 1
@@ -48,7 +48,7 @@ class Parser:
             command_type = 'L_COMMAND'
         else:
             command_type = 'C_COMMAND'
-            
+
         return command_type
 
     def c_instr_parts(self):
@@ -75,23 +75,9 @@ class Parser:
         else:
             print("Oh dear, something has gone wrong with c_instr_parts")
 
-
     def symbol(self):
         """Return the symbol for an A- or L-instruction."""
         if self.current_command[0] == '@':
             return self.current_command[1:]
         else:
             return self.current_command[1:-1]
-
-
-
-
-
-
-
-
-
-
-
-
-

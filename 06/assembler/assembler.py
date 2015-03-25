@@ -5,7 +5,7 @@ import codes as c
 import argparse
 from check_table import check_table
 
-arg_parser = argparse.ArgumentParser(description = "")
+arg_parser = argparse.ArgumentParser(description="")
 
 arg_parser.add_argument('filename',
                         help = 'name of file to use',
@@ -33,14 +33,14 @@ for i, line in enumerate(p.code):
 
     if command_type == 'C_COMMAND':
         dest, comp, jump = p.c_instr_parts()
-        
+
         # For a C-command, the first 3 bits are always 1
         instr_code = '111'
         dest_code = codes.dest(dest)
         comp_code = codes.comp(comp)
         jump_code = codes.jump(jump)
 
-        machine_code = ('%s%s%s%s' % (instr_code, comp_code, dest_code, 
+        machine_code = ('%s%s%s%s' % (instr_code, comp_code, dest_code,
                                       jump_code))
 
         with open(new_filename, 'a') as hack:
@@ -56,7 +56,7 @@ for i, line in enumerate(p.code):
             symbol = symbol_table.get_address(symbol)
         elif symbol[0] not in numbers:
             symbol_table.add_entry(symbol, ram_addr)
-            
+
             symbol = ram_addr
             ram_addr += 1
 
@@ -65,11 +65,9 @@ for i, line in enumerate(p.code):
         # which the slice then removes
         int_symbol = int(symbol)
         addr_code = "{0:017b}".format(int_symbol)[2:]
-        instr_code = '0' 
+        instr_code = '0'
 
         machine_code = instr_code + addr_code
 
         with open(new_filename, 'a') as hack:
             hack.write(machine_code + '\n')
-
-

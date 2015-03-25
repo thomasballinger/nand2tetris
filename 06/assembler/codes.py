@@ -60,4 +60,3 @@ class Codes:
     def jump(self, mnemonic):
         jump_code = self.jump_codes[mnemonic]
         return jump_code
-

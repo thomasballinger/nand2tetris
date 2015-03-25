@@ -2,7 +2,7 @@ import parser as par
 
 def check_table(table, symbol, line_number):
     """Preliminary check through assembly to find user-defined symbols.
-     
+
     Any symbols found can then be added to SymbolTable for future use.
     """
 
@@ -15,4 +15,3 @@ def check_table(table, symbol, line_number):
 
     if not table.contains(symbol) and symbol[0] not in numbers:
         table.add_entry(symbol, line_number)
-

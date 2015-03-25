@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 
 import parser as par
-import codes as c
+from codes import Codes
 import argparse
 
 arg_parser = argparse.ArgumentParser(description="")
 
 arg_parser.add_argument('filename',
-                        help = 'name of file to use',
-                        action = 'store'
-                       )
+                        help='name of file to use',
+                        action='store')
 args = arg_parser.parse_args()
 
 p = par.Parser(args.filename)
-codes = c.Codes()
 new_filename = args.filename[:-4] + '.hack'
 
 # Next available RAM address starts at 16 and increments every time a
@@ -35,9 +33,9 @@ for i, line in enumerate(p.code):
 
         # For a C-command, the first 3 bits are always 1
         instr_code = '111'
-        dest_code = codes.dest(dest)
-        comp_code = codes.comp(comp)
-        jump_code = codes.jump(jump)
+        dest_code = Codes.dest[dest]
+        comp_code = Codes.comp[comp]
+        jump_code = Codes.jump[jump]
 
         machine_code = ('%s%s%s%s' % (instr_code, comp_code, dest_code,
                                       jump_code))

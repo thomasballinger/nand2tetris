@@ -63,36 +63,24 @@ class Parser:
 
     def command_type(self):
         """Return the type of the current command."""
-        if self.current_command[0] == '@':
-            command_type = 'A_COMMAND'
-        elif self.current_command[0] == '(':
-            command_type = 'L_COMMAND'
-        else:
-            command_type = 'C_COMMAND'
-
-        return command_type
+        command_prefixes = {'@': 'A_COMMAND', '(': 'L_COMMAND'}
+        return command_prefixes.get(self.current_command[0], 'C_COMMAND')
 
     def c_instr_parts(self):
         """Return the specified part of self.current_command."""
         # C-commands are in the format 'dest=comp;jump', where either dest or
         # jump must be null. So there are 2 types of commands: 'dest=comp' and
         # 'comp;jump'.
-        split_equals = self.current_command.split('=')
-        split_semicolon = self.current_command.split(';')
-
-        if len(split_semicolon) == 2:
+        if ';' in self.current_command:
+            comp, jump = self.current_command.split(';')
             dest = 'null'
-            comp, jump = split_semicolon
-
-            return (dest, comp, jump)
-
-        if len(split_equals) == 2:
-            dest, comp = split_equals
+        elif '=' in self.current_command:
+            dest, comp = self.current_command.split('=')
             jump = 'null'
-
-            return (dest, comp, jump)
         else:
-            print("Oh dear, something has gone wrong with c_instr_parts")
+            raise ValueError("Oh dear, something has gone wrong with c_instr_parts")
+
+        return (dest, comp, jump)
 
     def symbol(self):
         """Return the symbol for an A- or L-instruction."""
